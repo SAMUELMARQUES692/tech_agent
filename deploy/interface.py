@@ -1,10 +1,12 @@
 # 1 - Imports ======================================================================
+import os
 import json
 import requests  # Biblioteca responsvel por fazer a comunicação com o servidor
 import streamlit as st
 
 AGENT_ID = "analista_tecnologico"
-ENDPOINT_URL = f"http://localhost:7777/agents/{AGENT_ID}/runs"
+AGENT_URL = os.getenv("AGENT_URL", "http://localhost:7777")
+ENDPOINT_URL = f"{AGENT_URL}/agents/{AGENT_ID}/runs"
 
 # 2 - Conexão com o Agno (SERVER) ===================================================
 def get_response_stream(message:str):
