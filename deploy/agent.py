@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from agno.agent import Agent
 from agno.db.sqlite import SqliteDb
 from agno.knowledge.knowledge import Knowledge
@@ -11,9 +12,16 @@ from agno.knowledge.embedder.sentence_transformer import SentenceTransformerEmbe
 
 load_dotenv()
 
+BASE_DIR = Path(__file__).resolve().parent          # pasta deploy/
+PDF_PATH = BASE_DIR.parent / "files" / "Panorama_Internacional_Games_2025.pdf"
+TMP_DIR = BASE_DIR / "tmp"
+TMP_DIR.mkdir(exist_ok=True)                        # cria tmp/ se não existir
+
 # RAG
-vector_db = ChromaDb(collection="pdf_agent", path="tmp/chormadb", persistent_client=True, embedder=SentenceTransformerEmbedder(),)
+vector_db = ChromaDb(collection="pdf_agent", path=str(TMP_DIR / "chormadb"),persistent_client=True, embedder=SentenceTransformerEmbedder())
 knowledge = Knowledge(vector_db=vector_db)
+
+db = SqliteDb(session_table="agent_session", db_file=str(TMP_DIR / "agent.db"))
 
 db = SqliteDb(session_table="agent_session", db_file="tmp/agent.db")
 
@@ -44,9 +52,9 @@ app = agent_os.get_app()
 # RUN ======================================================================================
 if __name__ == "__main__":
     knowledge.insert(
-        path="C:/Pycharm/first_api_python/files/Panorama_Internacional_Games_2025.pdf",
+        path=str(PDF_PATH),
         metadata={"source": "Ciencia tecnologia", "type": "pdf", "description": "Panorama Internacional Games 2025"},
         skip_if_exists=True,
-        reader=PDFReader()
+        reader=PDFReader(),
     )
     agent_os.serve(app="agent:app", host="0.0.0.0", port=int(os.getenv("PORT", 10000)), reload=False)
