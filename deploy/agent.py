@@ -57,4 +57,5 @@ if __name__ == "__main__":
         skip_if_exists=True,
         reader=PDFReader(),
     )
-    agent_os.serve(app="agent:app", host="0.0.0.0", port=int(os.getenv("PORT", 10000)), reload=False)
+
+    agent_os.serve(app=app, host="0.0.0.0", port=int(os.getenv("PORT", 10000)), reload=False)
