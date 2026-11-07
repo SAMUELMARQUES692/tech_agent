@@ -8,6 +8,8 @@ pypdf
 python-dotenv
 fastapi
 uvicorn
-sqlalchemy
+sqlalchemy[asyncio]
+greenlet
+aiosqlite
 requests
 streamlit
