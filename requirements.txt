@@ -1,9 +1,8 @@
 --extra-index-url https://download.pytorch.org/whl/cpu
 agno
 anthropic
+google-genai
 chromadb
-sentence-transformers
-torch
 pypdf
 python-dotenv
 fastapi

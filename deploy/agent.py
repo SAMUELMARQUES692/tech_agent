@@ -8,7 +8,7 @@ from agno.models.anthropic import Claude
 from agno.vectordb.chroma import ChromaDb
 from dotenv import load_dotenv
 from agno.os import AgentOS
-from agno.knowledge.embedder.sentence_transformer import SentenceTransformerEmbedder
+from agno.knowledge.embedder.google import GeminiEmbedder
 
 load_dotenv()
 
@@ -18,7 +18,7 @@ TMP_DIR = BASE_DIR / "tmp"
 TMP_DIR.mkdir(exist_ok=True)                        # cria tmp/ se não existir
 
 # RAG
-vector_db = ChromaDb(collection="pdf_agent", path=str(TMP_DIR / "chormadb"),persistent_client=True, embedder=SentenceTransformerEmbedder())
+vector_db = ChromaDb(collection="pdf_agent", path=str(TMP_DIR / "chormadb"), persistent_client=True, embedder=GeminiEmbedder())
 knowledge = Knowledge(vector_db=vector_db)
 
 db = SqliteDb(session_table="agent_session", db_file=str(TMP_DIR / "agent.db"))
