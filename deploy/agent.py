@@ -23,8 +23,6 @@ knowledge = Knowledge(vector_db=vector_db)
 
 db = SqliteDb(session_table="agent_session", db_file=str(TMP_DIR / "agent.db"))
 
-db = SqliteDb(session_table="agent_session", db_file="tmp/agent.db")
-
 agent = Agent(
     id="analista_tecnologico",
     name="Ciencia tecnologia",
